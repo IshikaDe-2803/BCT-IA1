@@ -1,0 +1,58 @@
+<head>
+    <title>Contact</title>
+</head>
+{% extends "navbar_temp.html" %}
+
+{% block navbar %}
+        <br><br>
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <div class="fadeIn first">
+                    <h2>Contact Us</h2>
+                </div>
+                {% if contact %}
+                <script>alert("Your message was NOT sent!")</script>
+                {% endif %}
+                <span style = "color:'red'"></span>
+                <form action='/contact', method="POST">
+                    
+                    <input type="text" id="name" name="name" class="fadeIn second"  
+                     placeholder="Enter your Name" required/>
+                    
+                    <input type="text" id="email" name="email" class="fadeIn third"
+                     placeholder="Enter your Email ID" required/>
+                    
+                    <input type="text" id="message" name="message" class="fadeIn third"
+                    placeholder="Message" required/>
+
+                    <input type="submit" class="fadeIn fourth" value="Submit"/>
+                </form>
+
+                <!-- <div id="formFooter">
+                    <a class="underlineHover" href="Login.html">Login</a>
+                </div> -->
+            </div>
+
+            <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+            <div class="wrapper2">
+                <div class="button">          
+               
+                <div class="icon"><a class="SM" target="_blank" href="mail:dmishika2002@gmail.com"><i  class="fas fa-envelope"></i></a></div>
+                <span>Mail</span>
+                </div>
+                <div class="button">
+                <div class="icon"><a class = "SM" target="_blank" href= "tel:9137907057"><i class="fas fa-phone"></i></a></div>
+                <span>Call</span>
+                </div>
+                <div class="button">
+                <div class="icon"><a class="SM" target="_blank" href= "https://www.instagram.com/its_ishikade/"><i class="fab fa-instagram"></i></a> </div>
+                <span>Instagram</span>
+                </div>               
+        
+                <div class="button">
+                <div class="icon"><a class="SM" target="_blank" href= "https://www.linkedin.com/in/ishika-de-3a01aa1b8/"><i class="fab fa-linkedin-in"></i></a></div>
+                <span>Linked-in</span>
+            </div>
+        </div>
+        
+{% endblock %}

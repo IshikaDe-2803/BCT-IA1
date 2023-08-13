@@ -1,0 +1,41 @@
+<head>
+    <title>Sign Up</title>
+</head>
+{% extends "navbar_temp.html" %}
+
+{% block navbar %}
+{% if signup %}
+<script>alert("Sign up was successful!")</script>
+{% endif %}
+    </div>
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <div class="fadeIn first">
+                    <h2>Create Account</h2>
+                </div>
+                
+                {% if error %}  
+                    <span style = "color:red">{{ error }}</span>
+                {% endif %}  
+
+                <form action="/signup", method="POST">
+                    
+                    <input type="text" id="email" name='email' class="fadeIn second" 
+                     placeholder="Email" required/>
+                    
+                    <input type="password" id="password" name='password' class="fadeIn third" 
+                     placeholder="Password" required/>
+                    
+                    <input type="password" id="cpassword" name='cpassword' class="fadeIn third" 
+                    placeholder="Confirm Password" required/>
+
+                    <input type="submit" class="fadeIn fourth" value="Create"/>
+                </form>
+
+                <div id="formFooter">
+                    <a class="underlineHover" href="{{ url_for('login') }}">Login</a>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

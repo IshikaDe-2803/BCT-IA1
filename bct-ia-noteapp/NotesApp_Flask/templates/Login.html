@@ -1,0 +1,39 @@
+<head>
+    <title>Login</title>
+</head>
+{% extends "navbar_temp.html" %}
+
+{% block navbar %}
+
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <div class="fadeIn first">
+                    <h2>Login</h2>
+                </div>
+                {% if success %}  
+                    <span style = "color:green">{{ success }}</span>
+                {% endif %}  
+                {% if error %}  
+                    <span style = "color:red">{{ error }}</span>
+                {% endif %} 
+                <form action = "/login", method = "POST" >
+                    <input type="text" id="login" name="email" class="fadeIn second"
+                    placeholder="Email" onChange={this.handleChange} required/>
+                    
+                    <input type="password" id="password" name="password" class="fadeIn third" 
+                    placeholder="Password" required/>
+                    
+                    <input type="submit" class="fadeIn fourth" value="Log In"/>
+                </form>
+<!-- 
+                <div class='create'>
+                    
+                </div> -->
+
+                <div id="formFooter">
+                    <a class="underlineHover" href="{{ url_for('signup') }}">Create Account</a>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #000000">
+  <head style="background-color: #000000">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script
+      src="https://kit.fontawesome.com/c7d8df87b8.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/4/darkly/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="static/publicNotestyle.css" />
+    <title>Public Notes</title>
+  </head>
+
+  <body>
+      <div class = "mynav">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+           <a class="brand" href="{{ url_for('index') }}">NOTEAPP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+           </button>
+                      
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('notes') }}">My Notes</a>
+                   </li>     
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('publicNotes') }}">Public Notes</a>
+                </li>      
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
+                </li>     
+              </ul>
+              </div>
+              </div>
+           </nav>
+         </div>
+      </div>
+      <br><br>
+      <ul style = "list-style: none; display: flex; flex-wrap: wrap;">
+        {% for note in allNotes %}
+        <li>
+          <div id="note-list" class="mt-5 d-flex flex-wrap">
+            <div class="card text-white bg-primary mb-3">
+              <div class="card-header">
+                <!-- <button class="btn"><i class="far fa-edit"></i></button>             -->
+                <h5><b>{{note["title"]}}</b></h5>
+                <h6 style="font-size: x-small;">{{note["timestamp"]}}</h6>
+                <!-- <h6><i>{{note.username}}</i></h6> -->
+              </div>
+              <div class="card-body bg-primary">
+                <p class="card-text">{{note["content"]}}</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+  </body>
+</html>

@@ -1,0 +1,134 @@
+body {
+  background-color: black;
+  margin: 0px 0px 0px 0px;
+  font-family: "Poppins", sans-serif;
+}
+.fa-book-open{
+    color: rgb(255, 255, 255);
+}
+.btn{
+    background-color:black;
+}
+
+input[type="submit"]{   
+  background-color: #38b6ff;
+  border: none;
+  color: white;
+    padding: 10px ;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin: 5px 20px 20px 0px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+  input[type="text"], .form-control{    
+    border: none;
+    padding: 10px ;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin: 5px 10px 20px 0px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+  input[type="submit"]:hover {
+    background-color: #ffffff;
+    color: black;
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+  }
+
+  input[type="submit"]:active {
+    background-color: #38b6ff;
+color: #ffffff;
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+.card {
+  width:200px;
+  height: fit-content;
+  margin-left: 40px;
+}
+.card-header i {
+  float:right;
+}
+.fa-trash {
+  cursor: pointer;
+}
+
+.navbar {
+  background-color: black;
+}
+
+.navbar-light .navbar-brand, .brand {
+color: #fff;
+font-size: 25px;
+text-transform: uppercase;
+font-weight: bold;
+letter-spacing: 2px;
+}
+.brand:hover {
+  color: #fff;
+  text-decoration: none;
+  box-shadow: inset;
+}
+
+.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
+color: #fff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+color: #fff;
+}
+
+.navbar-toggler {
+background: #fff;
+}
+
+.navbar-nav {
+text-align: center;
+}
+
+.nav-link {
+padding: .2rem 1rem;
+}
+
+.nav-link.active,.nav-link:focus{
+color: #fff;
+}
+
+.navbar-toggler {
+padding: 1px 5px;
+font-size: 18px;
+line-height: 0.3;
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+color: #fff;
+text-decoration: underline;
+}
+

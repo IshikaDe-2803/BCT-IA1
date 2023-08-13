@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #000000">
+  <head style="background-color: #000000">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script
+      src="https://kit.fontawesome.com/c7d8df87b8.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/4/darkly/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="static/notes.css" />
+    <title>My Notes</title>
+  </head>
+  
+  <body>
+      <div class = "mynav">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+           <a class="brand" href="{{ url_for('index') }}">NOTEAPP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+           </button>
+                      
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('notes') }}">My Notes</a>
+                   </li>     
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{ url_for('publicNotes') }}">Public Notes</a>
+                </li>      
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
+                </li>     
+              </ul>
+              </div>
+              </div>
+           </nav>
+         </div>
+      </div>
+      <br><br>
+    <div class="container mt-4">
+      <h1 class="display-5 text-center">
+        <i class="fas fa-book-open"></i>
+        My Notes
+      </h1>
+      {% if session['notification'] %}
+      <script>
+        function hide_notification() {
+          var x = document.getElementById("notify")
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+      </script>
+      <div class="toast show" id="notify" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="mr-auto">Notification!</strong>
+          <button type="button" onclick="hide_notification()" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+          {{session['notification']}}
+        </div>
+      </div>
+      {% endif %}
+      <form id="note-form" action="/notes" , method="POST">
+        <div class="form-group">
+          <label for="title">TITLE</label>
+          <input type="text" id="title" name="title" class="form-control" required/>
+        </div>
+        <div class="form-group">
+          <label for="content">NOTE</label>
+          <textarea
+            class="form-control"
+            name="content"
+            id="content"
+            rows="9"
+          ></textarea>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="is-public" id="flexCheckChecked" name="is-public" checked>
+          <label class="form-check-label" for="flexCheckChecked">
+            Check to make your note publicly available.
+          </label>
+        </div>
+        <input type="submit" value="Save note" class="btn-block" />
+      </form>
+    </div>    
+    <ul style = "list-style: none; display: flex; flex-wrap: wrap;">
+      {% for note in allNotes %}
+      <li>
+        <div id="note-list" class="mt-5 d-flex flex-wrap">
+          <div class="card text-white bg-primary mb-3">
+            <div class="card-header" name="{{note['id']}}">
+              <!-- <button class="btn"><i class="far fa-edit"></i></button>             -->
+              <h5>{{note["title"]}}</h5>
+              <span>{{note["timestamp"]}}</span>
+              <form method="POST" action="/delete" id="del">
+                <input type="hidden" value="{{note['id']}}" name="noteid" />
+                <button type="submit" class="btn">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+            </div>
+            <div class="card-body bg-primary">
+              <p class="card-text">{{note["content"]}}</p>
+            </div>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </body>
+</html>
