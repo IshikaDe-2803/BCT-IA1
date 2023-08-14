@@ -9,7 +9,7 @@ BCT IA
 - npm install
 - cd NoteApp_Flask
 - python3 -m venv venv
-- venv/bin/activate
+- venv\Scripts\activate
 - pip install -r requirements.txt
 
 # Run
