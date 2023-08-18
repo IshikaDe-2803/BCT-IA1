@@ -100,13 +100,29 @@
         <input type="submit" value="Save note" class="btn-block" />
       </form>
     </div>    
-    <ul style = "list-style: none; display: flex; flex-wrap: wrap;">
+    
+    <!-- button -->
+    <div class="container mt-4">
+      <form method="get" action="{{ url_for('notes', user_id=user_id) }}">
+        <div class="form-group">
+          <label for="sort">Sort by:</label>
+          <select name="sort" id="sort" class="form-control">
+            <option value="timestamp" {% if sort_order == 'timestamp' %}selected{% endif %}>Newest to Oldest</option>
+            <option value="title" {% if sort_order == 'title' %}selected{% endif %}>Title</option>
+            <!-- Add more sorting options as needed -->
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Sort</button>
+      </form>
+    </div>
+
+    <!-- replaced loop -->
+    <ul style="list-style: none; display: flex; flex-wrap: wrap;">
       {% for note in allNotes %}
       <li>
         <div id="note-list" class="mt-5 d-flex flex-wrap">
           <div class="card text-white bg-primary mb-3">
             <div class="card-header" name="{{note['id']}}">
-              <!-- <button class="btn"><i class="far fa-edit"></i></button>             -->
               <h5>{{note["title"]}}</h5>
               <span>{{note["timestamp"]}}</span>
               <form method="POST" action="/delete" id="del">

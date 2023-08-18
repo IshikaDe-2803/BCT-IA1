@@ -4,6 +4,9 @@ import os
 import datetime
 from static import contract
 
+import sys
+# import 
+
 basedir = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__, template_folder='templates')
 app.secret_key = 'super secret key'
@@ -79,7 +82,7 @@ def signup():
         check_email = Users.query.filter_by(email=email_id).first()
         if check_email is None and password_copy == password1 and len(password1) > 8:
             createUser = contract.functions.createUser(email_id, password1).transact({
-                'from': '0xb5DaF24c8D35968B5702F0E9aF18CaAeCeF7E421'
+                'from': '0x852306f2434a73dCdD3d69b8807D79F699de12dB'
             })
 
             # Fetch the user's userId from the contract
@@ -96,7 +99,8 @@ def signup():
 
 @app.route('/notes', methods=['GET', 'POST'])
 def notes():
-
+    
+    # print('Hello world!', flush=True)
     if 'email' not in session:
         return redirect(url_for('login'))  # Redirect to login if not authenticated
 
@@ -108,6 +112,9 @@ def notes():
     # Fetch the user's userId from the contract or database based on the email
     user_id = contract.functions.getUserIdByEmail(email).call()
     username = session['email']
+    # Determine the sort order based on the query parameter
+    sort_order = request.args.get('sort', 'timestamp')  # Default sorting by timestamp
+    # print(sort_order)
     if request.method == "POST":
         session['notification'] = ""
         title = request.form['title']
@@ -118,12 +125,12 @@ def notes():
             is_public = False
 
         createNote = contract.functions.createNote(title, content, is_public, user_id).transact({
-            'from': '0xb5DaF24c8D35968B5702F0E9aF18CaAeCeF7E421'
+            'from': '0x852306f2434a73dCdD3d69b8807D79F699de12dB'
         })
         allNotes = formatNotes(contract.functions.getAllNotes().call())
         return redirect(url_for('notes', user_id=user_id))
     else:
-        user_notes = formatNotes(contract.functions.getUserNotes(user_id).call())
+        user_notes = formatNotes(contract.functions.getUserNotes(user_id).call(),sort_order)
         return render_template('notes.html', allNotes=user_notes)
 
 
@@ -132,7 +139,7 @@ def delete():
     session['notification'] = ""
     noteid = int(request.form['noteid'])
     delNote = contract.functions.deleteNote(noteid).transact({
-            'from': '0xb5DaF24c8D35968B5702F0E9aF18CaAeCeF7E421'
+            'from': '0x852306f2434a73dCdD3d69b8807D79F699de12dB'
         })
     
     email = session['email']
@@ -146,7 +153,7 @@ def publicNotes():
     print(publicNotes)
     return render_template('publicNotes.html', allNotes=publicNotes)
 
-def formatNotes(notes):
+def formatNotes(notes, sort_by="timestamp"):
     allNotes = []
     for note in notes:
         allNotes.append({
@@ -157,6 +164,14 @@ def formatNotes(notes):
             "publicNote": note[4],
             "username": note[5][1]
         })  
+    # print(sort_by,file=sys.stderr)
+    
+    if sort_by == "timestamp":
+        allNotes.sort(key=lambda x: x[sort_by], reverse=True)
+    else:
+        allNotes.sort(key=lambda x: x[sort_by], reverse=False)  
+    
+    # Sort by specified key in reverse order
     return allNotes
 
 def formatDate(unix_date):
