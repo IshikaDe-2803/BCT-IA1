@@ -131,8 +131,13 @@ def notes():
         return redirect(url_for('notes', user_id=user_id))
     else:
         user_notes = formatNotes(contract.functions.getUserNotes(user_id).call(),sort_order)
-        return render_template('notes.html', allNotes=user_notes)
+        
 
+        search_query = request.args.get('search', '')
+        if search_query:
+            # Filter notes based on search query
+            user_notes = [note for note in user_notes if search_query.lower() in note['title'].lower()]
+    return render_template('notes.html', allNotes=user_notes,search_query=search_query)
 
 @app.route('/delete', methods=['POST'])
 def delete():

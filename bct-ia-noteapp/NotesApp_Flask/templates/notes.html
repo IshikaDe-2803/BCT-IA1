@@ -101,6 +101,23 @@
       </form>
     </div>    
     
+    <div class="container mt-4">
+      <form method="get" action="{{ url_for('notes', user_id=user_id) }}">
+        <div class="form-group">
+          <label for="search">Search by Title:</label>
+          <input type="text" placeholder="Enter Title of note" name="search" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+
+    {% if search_query %}
+    <div class="container mt-4">
+      <p class="lead">Search results for: {{ search_query }}</p>
+    </div>
+    {% endif %}
+
+
     <!-- button -->
     <div class="container mt-4">
       <form method="get" action="{{ url_for('notes', user_id=user_id) }}">
