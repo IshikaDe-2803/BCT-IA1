@@ -102,23 +102,27 @@
     </div>    
     
     <div class="container mt-4">
-      <form method="get" action="{{ url_for('notes', user_id=user_id) }}">
+      <form method="get" action="{{ url_for('notes', user_id=user_id) }}"id="search-form">
         <div class="form-group">
           <label for="search">Search by Title:</label>
           <input type="text" placeholder="Enter Title of note" name="search" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
+        <button type="button" class="btn btn-secondary" onclick="clearForm('search-form')">Clear</button>
       </form>
     </div>
 
-    {% if search_query %}
-    <div class="container mt-4">
-      <p class="lead">Search results for: {{ search_query }}</p>
-    </div>
-    {% endif %}
+    <script>
+      function clearForm(formId) {
+        var form = document.getElementById(formId);
+        if (form) {
+          form.reset();
+          window.location.href = "{{ url_for('notes', user_id=user_id) }}";
+        }
+      }
+    </script>     
 
-
-    <!-- button -->
+        <!-- button -->
     <div class="container mt-4">
       <form method="get" action="{{ url_for('notes', user_id=user_id) }}">
         <div class="form-group">
@@ -132,6 +136,30 @@
         <button type="submit" class="btn btn-primary">Sort</button>
       </form>
     </div>
+
+    {% if search_query %}
+    <div class="container mt-4">
+      <p class="lead">Search results for: {{ search_query }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Add this anchor element where you want to scroll to -->
+    <div id="scrollTarget"></div>
+
+    <script>
+      // Function to scroll to the target element
+      function scrollToTarget() {
+        var scrollToElement = document.getElementById('scrollTarget');
+        if (scrollToElement) {
+          scrollToElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      // Call the scrollToTarget function to scroll to the target automatically
+      window.onload = function() {
+        scrollToTarget();
+      };
+    </script>
 
     <!-- replaced loop -->
     <ul style="list-style: none; display: flex; flex-wrap: wrap;">
