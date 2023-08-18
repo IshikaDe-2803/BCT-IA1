@@ -135,6 +135,7 @@
 
     <!-- replaced loop -->
     <ul style="list-style: none; display: flex; flex-wrap: wrap;">
+      {% if allNotes %}
       {% for note in allNotes %}
       <li>
         <div id="note-list" class="mt-5 d-flex flex-wrap">
@@ -156,6 +157,9 @@
         </div>
       </li>
       {% endfor %}
+      {% else %}
+      <p class="text-center">No notes found.</p>
+      {% endif %}
     </ul>
 
   </body>
