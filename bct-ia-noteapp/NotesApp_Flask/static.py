@@ -4,7 +4,7 @@ import json
 w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545')) # Change to your RPC provider
 with open('../build/contracts/Notes.json') as f:
     abi = json.load(f)["abi"]
-contract_address = '0xAD87971293D129A90702F96aECdBE204387D335D'
+contract_address = '0xC8d95C8BEbD02529FEFA890C8A0a52a28e00AC0D'
  # Replace with your contract address
 
 # contract = w3.eth.contract(address=contract_address, abi=abi)

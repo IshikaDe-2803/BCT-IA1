@@ -79,7 +79,7 @@ def signup():
         check_email = Users.query.filter_by(email=email_id).first()
         if check_email is None and password_copy == password1 and len(password1) > 8:
             createUser = contract.functions.createUser(email_id, password1).transact({
-                'from': '0xaED46E104f772d08e01EA06815De22Dacb8341E8'
+                'from': '0xb5DaF24c8D35968B5702F0E9aF18CaAeCeF7E421'
             })
 
             # Fetch the user's userId from the contract
@@ -118,7 +118,7 @@ def notes():
             is_public = False
 
         createNote = contract.functions.createNote(title, content, is_public, user_id).transact({
-            'from': '0xaED46E104f772d08e01EA06815De22Dacb8341E8'
+            'from': '0xb5DaF24c8D35968B5702F0E9aF18CaAeCeF7E421'
         })
         allNotes = formatNotes(contract.functions.getAllNotes().call())
         return redirect(url_for('notes', user_id=user_id))
@@ -132,14 +132,18 @@ def delete():
     session['notification'] = ""
     noteid = int(request.form['noteid'])
     delNote = contract.functions.deleteNote(noteid).transact({
-            'from': '0xaED46E104f772d08e01EA06815De22Dacb8341E8'
+            'from': '0xb5DaF24c8D35968B5702F0E9aF18CaAeCeF7E421'
         })
-    allNotes = formatNotes(contract.functions.getAllNotes().call())
-    return render_template('notes.html', saved=True, allNotes=allNotes)
+    
+    email = session['email']
+    user_id = contract.functions.getUserIdByEmail(email).call()
+    user_notes = formatNotes(contract.functions.getUserNotes(user_id).call())
+    return render_template('notes.html', allNotes=user_notes)
 
 @app.route('/publicNotes')
 def publicNotes():
-    publicNotes = formatNotes(contract.functions.getPublicNotes().call()) 
+    publicNotes = formatNotes(contract.functions.getPublicNotes().call())
+    print(publicNotes)
     return render_template('publicNotes.html', allNotes=publicNotes)
 
 def formatNotes(notes):
@@ -150,7 +154,8 @@ def formatNotes(notes):
             "title": note[1],
             "content": note[2],
             "timestamp": formatDate(note[3]),
-            "publicNote": note[4]
+            "publicNote": note[4],
+            "username": note[5][1]
         })  
     return allNotes
 
