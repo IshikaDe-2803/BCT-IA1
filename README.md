@@ -9,11 +9,11 @@ BCT IA
 - npm install
 - cd NoteApp_Flask
 - python3 -m venv venv
-- venv/bin/activate
+- venv\Scripts\activate
 - pip install -r requirements.txt
 
 # Run
-- flask --app note_app run
+- flask --app notes_app run
 
 # Ref
 - Creating blockchain app from scratch: https://www.dappuniversity.com/articles/blockchain-app-tutorial
