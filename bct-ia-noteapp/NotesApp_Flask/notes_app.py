@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, url_for,flash,session
 from flask_sqlalchemy import SQLAlchemy
 import os
 import datetime
@@ -43,19 +43,31 @@ def login():
     if request.method == 'POST':
         email_id = request.form['email']
         password1 = request.form['password']
-        check_email = Users.query.filter_by(email=email_id).first()
-        if check_email is not None and check_email.password == password1:
-            session['email'] = email_id
-            success = 'Login SUCCESSFUL'
-            return redirect('notes')
-        elif check_email is None:
-            error = 'Account Doesn\'t Exists'
-            return render_template('Login.html', error=error)
+        
+        # Fetch the user's ID using the getUserIdByEmail function from the contract
+        user_id = contract.functions.getUserIdByEmail(email_id).call()
+        
+        if user_id > 0:
+            # Fetch the user's data using the getUsers function from the contract
+            user_data = contract.functions.getUsers(user_id).call()
+            
+            user_id, username, stored_password = user_data
+            
+            # Verify password and perform login logic
+            if stored_password == password1:
+                session['email'] = email_id
+                return redirect(url_for('notes'))  # Redirect to user's notes
+            else:
+                error = 'Incorrect Login Credentials'
+                return render_template('Login.html', error=error)
         else:
-            error = 'Incorrect Login Credentials'
+            error = 'Account Doesn\'t Exist'
             return render_template('Login.html', error=error)
     else:
         return render_template('Login.html')
+
+
+
 
 
 @app.route('/signup', methods=['POST', 'GET'])
@@ -66,24 +78,35 @@ def signup():
         password_copy = request.form['cpassword']
         check_email = Users.query.filter_by(email=email_id).first()
         if check_email is None and password_copy == password1 and len(password1) > 8:
+            createUser = contract.functions.createUser(email_id, password1).transact({
+                'from': '0xaED46E104f772d08e01EA06815De22Dacb8341E8'
+            })
+
+            # Fetch the user's userId from the contract
+            user_id = contract.functions.getUserIdByEmail(email_id).call()
+
+            # Set session data and redirect to user's notes
             session['email'] = email_id
-            new_user = Users(email=email_id, password=password1)
-            db.session.add(new_user)
-            db.session.commit()
-            return render_template('Login.html', signup=True)
+            return redirect(url_for('notes', user_id=user_id))
         elif check_email is not None:
-            error = 'Account Already Exists'
-            return render_template('SignUp.html', error=error)
+            flash('Account already exists')
         else:
-            error = 'Error: Incorrect Password'
-            return render_template('SignUp.html', error=error)
-
-    else:
-        return render_template('SignUp.html')
-
+            flash('Error: Incorrect Password or Password Length')
+    return render_template('SignUp.html')
 
 @app.route('/notes', methods=['GET', 'POST'])
 def notes():
+
+    if 'email' not in session:
+        return redirect(url_for('login'))  # Redirect to login if not authenticated
+
+    if 'email' not in session:
+        return redirect(url_for('login'))  # Redirect to login if not authenticated
+
+    email = session['email']
+    
+    # Fetch the user's userId from the contract or database based on the email
+    user_id = contract.functions.getUserIdByEmail(email).call()
     username = session['email']
     if request.method == "POST":
         session['notification'] = ""
@@ -91,20 +114,17 @@ def notes():
         content = request.form['content']
         if 'is-public' in request.form:
             is_public = True
-        else :
+        else:
             is_public = False
-        # Check duplicates:
-        #     allNotes = Notes.query.filter_by(username=username)
-        #     session['notification'] = "Note title entered already exists!"
-        #     return redirect('notes')
-        createNote = contract.functions.createNote(title, content, is_public).transact({
-            'from': '0x9DfC5A23f2B9a4da299Ad4177CE417F670E3D91a'
+
+        createNote = contract.functions.createNote(title, content, is_public, user_id).transact({
+            'from': '0xaED46E104f772d08e01EA06815De22Dacb8341E8'
         })
         allNotes = formatNotes(contract.functions.getAllNotes().call())
-        return render_template('notes.html', allNotes=allNotes)
+        return redirect(url_for('notes', user_id=user_id))
     else:
-        allNotes = formatNotes(contract.functions.getAllNotes().call())
-        return render_template('notes.html', allNotes=allNotes)
+        user_notes = formatNotes(contract.functions.getUserNotes(user_id).call())
+        return render_template('notes.html', allNotes=user_notes)
 
 
 @app.route('/delete', methods=['POST'])
@@ -112,7 +132,7 @@ def delete():
     session['notification'] = ""
     noteid = int(request.form['noteid'])
     delNote = contract.functions.deleteNote(noteid).transact({
-            'from': '0x9DfC5A23f2B9a4da299Ad4177CE417F670E3D91a'
+            'from': '0xaED46E104f772d08e01EA06815De22Dacb8341E8'
         })
     allNotes = formatNotes(contract.functions.getAllNotes().call())
     return render_template('notes.html', saved=True, allNotes=allNotes)

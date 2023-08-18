@@ -77,7 +77,7 @@
         </div>
       </div>
       {% endif %}
-      <form id="note-form" action="/notes" , method="POST">
+      <form id="note-form" action="{{ url_for('notes', user_id=user_id) }}" , method="POST">
         <div class="form-group">
           <label for="title">TITLE</label>
           <input type="text" id="title" name="title" class="form-control" required/>
