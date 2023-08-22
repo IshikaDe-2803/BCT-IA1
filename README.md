@@ -1,12 +1,22 @@
 # BCT IA1: NotesApp
 The aim of a note-taking app is to provide users with a digital platform to easily and efficiently capture, organize, and manage their notes and information
 
+> Team Members
+1. Sanyukta Joshi (16010120019)
+2. Ishika De (16010120065)
+3. Tanvi Deshpande (16010120067)
+
 > Features
 1. Note creation and editing
 2. Note deletion
 3. Search functionality to search for a particular note
 4. Sort notes based on date time
 5. Add attachments to notes (if time persists)
+
+# Tech Stack
+- Front End: HTML, CSS, JavaScript
+- Back End: Flask
+- Blockchain: Ganache (Personal Blockchain), Truffle Framework (Ethereum Smart contracts), Solidity
 
 # Prerequisite
 - Download Ganache - https://trufflesuite.com/ganache/
