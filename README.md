@@ -6,6 +6,8 @@ The aim of a note-taking app is to provide users with a digital platform to easi
 2. Ishika De (16010120065)
 3. Tanvi Deshpande (16010120067)
 
+![image](https://github.com/IshikaDe-2803/BCT-IA1/assets/81436870/6257f146-a039-4faf-8e90-feb766b584b9)
+
 > Features
 1. Note creation and editing
 2. Note deletion
