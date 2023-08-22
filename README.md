@@ -9,11 +9,11 @@ The aim of a note-taking app is to provide users with a digital platform to easi
 ![image](https://github.com/IshikaDe-2803/BCT-IA1/assets/81436870/6257f146-a039-4faf-8e90-feb766b584b9)
 
 > Features
-1. Note creation and editing
-2. Note deletion
-3. Search functionality to search for a particular note
-4. Sort notes based on date time
-5. Add attachments to notes (if time persists)
+1. Login/Sign Up
+2. Note creation 
+3. Note deletion
+4. Search functionality to search for a particular note
+5. Sort notes based on date time
 
 # Tech Stack
 - Front End: HTML, CSS, JavaScript
