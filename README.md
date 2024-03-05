@@ -26,7 +26,7 @@ The aim of a note-taking app is to provide users with a digital platform to easi
   
 # Installation and Set up
 - ```npm install```
-- ```cd NoteApp_Flask```
+- ```cd NotesApp_Flask```
 - ```python3 -m venv venv```
 - ```venv\Scripts\activate```
 - ```pip install -r requirements.txt```
@@ -36,8 +36,13 @@ The aim of a note-taking app is to provide users with a digital platform to easi
 - ```truffle compile```
 - ```truffle migrate --reset```
 
+# Connecting app to ganache
+- Copy the network address from Notes.json and paste it in contract_address in static.py
+- From Notes.json, find the transactionHash and search for the same on ganache
+- Copy senders_address from ganache and replace the transaction_from parameter in every contract function written in the main app
+
 # Run Flask App
-- ```cd NoteApp_Flask```
+- ```cd NotesApp_Flask```
 - ```flask --app notes_app run```
 
 # References
